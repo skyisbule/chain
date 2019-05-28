@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.skyisbule.chain.dao.ApprovalDao">
+  <resultMap id="BaseResultMap" type="com.github.skyisbule.chain.domain.Approval">
+    <id column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="require" jdbcType="INTEGER" property="require" />
+    <result column="is_pass" jdbcType="INTEGER" property="isPass" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    aid, `uid`, user_name, `require`, is_pass, `comment`
+  </sql>
+  <select id="selectByExample" parameterType="com.github.skyisbule.chain.domain.ApprovalExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_approval
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from db_approval
+    where aid = #{aid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from db_approval
+    where aid = #{aid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.github.skyisbule.chain.domain.ApprovalExample">
+    delete from db_approval
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="aid" keyProperty="aid" parameterType="com.github.skyisbule.chain.domain.Approval" useGeneratedKeys="true">
+    insert into db_approval (`uid`, user_name, `require`, 
+      is_pass, `comment`)
+    values (#{uid,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{require,jdbcType=INTEGER}, 
+      #{isPass,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="aid" keyProperty="aid" parameterType="com.github.skyisbule.chain.domain.Approval" useGeneratedKeys="true">
+    insert into db_approval
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="require != null">
+        `require`,
+      </if>
+      <if test="isPass != null">
+        is_pass,
+      </if>
+      <if test="comment != null">
+        `comment`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="require != null">
+        #{require,jdbcType=INTEGER},
+      </if>
+      <if test="isPass != null">
+        #{isPass,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.github.skyisbule.chain.domain.ApprovalExample" resultType="java.lang.Long">
+    select count(*) from db_approval
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update db_approval
+    <set>
+      <if test="record.aid != null">
+        aid = #{record.aid,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null">
+        `uid` = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.require != null">
+        `require` = #{record.require,jdbcType=INTEGER},
+      </if>
+      <if test="record.isPass != null">
+        is_pass = #{record.isPass,jdbcType=INTEGER},
+      </if>
+      <if test="record.comment != null">
+        `comment` = #{record.comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update db_approval
+    set aid = #{record.aid,jdbcType=INTEGER},
+      `uid` = #{record.uid,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      `require` = #{record.require,jdbcType=INTEGER},
+      is_pass = #{record.isPass,jdbcType=INTEGER},
+      `comment` = #{record.comment,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.github.skyisbule.chain.domain.Approval">
+    update db_approval
+    <set>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="require != null">
+        `require` = #{require,jdbcType=INTEGER},
+      </if>
+      <if test="isPass != null">
+        is_pass = #{isPass,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        `comment` = #{comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.github.skyisbule.chain.domain.Approval">
+    update db_approval
+    set `uid` = #{uid,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      `require` = #{require,jdbcType=INTEGER},
+      is_pass = #{isPass,jdbcType=INTEGER},
+      `comment` = #{comment,jdbcType=VARCHAR}
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+</mapper>
