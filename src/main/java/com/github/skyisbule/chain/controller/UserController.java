@@ -16,7 +16,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @ApiOperation("")
+    @ApiOperation("注册")
     @RequestMapping("/register")
     public BaseHttpResponse<User> doRegister(User user) throws GlobalException {
         try{
@@ -25,5 +25,16 @@ public class UserController {
             throw new GlobalException(e.getMessage());
         }
     }
+
+    @ApiOperation("登录")
+    @RequestMapping("/login")
+    public BaseHttpResponse<User> doLogin(String userName,String passowrd) throws GlobalException {
+        try{
+            return new BaseHttpResponse<>(userService.doLogin(userName,passowrd));
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.github.skyisbule.chain.service;
 
 import cn.hutool.http.HttpRequest;
 import com.github.skyisbule.chain.common.ErrorConstant;
+import com.github.skyisbule.chain.common.Security;
 import com.github.skyisbule.chain.dao.UserDao;
 import com.github.skyisbule.chain.domain.User;
 import com.github.skyisbule.chain.domain.UserExample;
@@ -47,9 +48,20 @@ public class UserService {
         return null;
     }
 
-    public void doLogin(String userName,String password) throws GlobalException {
+    public User doLogin(String userName,String password) throws GlobalException {
         if (userName == null || password == null)
             throw new GlobalException(ErrorConstant.ACCOUNT_OR_PASSWD_ERROR);
+        UserExample e = new UserExample();
+        e.createCriteria()
+                .andUserNameEqualTo(userName)
+                .andPasswordEqualTo(password);
+        int count = (int)userDao.countByExample(e);
+        if (count < 0){
+            throw new GlobalException(ErrorConstant.ACCOUNT_OR_PASSWD_ERROR);
+        }
+        User user = userDao.selectByExample(e).get(0);
+        user.setPassword(Security.encode(password));
+        return user;
 
     }
 
