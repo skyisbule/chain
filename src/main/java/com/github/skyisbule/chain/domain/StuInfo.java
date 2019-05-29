@@ -21,6 +21,10 @@ public class StuInfo implements Serializable {
 
     private String exangeHash;
 
+    public String getAll(){
+        return stuName + " " +school + " " +timeRange + " " + idNum;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getSid() {
