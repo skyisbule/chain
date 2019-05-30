@@ -7,10 +7,11 @@ import com.github.skyisbule.chain.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping(value = "/api/user",method = {RequestMethod.GET,RequestMethod.POST})
 public class UserController {
 
     @Autowired

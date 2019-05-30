@@ -21,6 +21,13 @@ public class StuInfo implements Serializable {
 
     private String exangeHash;
 
+    public void setAll(String stuName,String school,String timeRange,String idNum){
+        this.stuName = stuName;
+        this.school  = school;
+        this.timeRange = timeRange;
+        this.idNum   = idNum;
+    }
+
     public String getAll(){
         return stuName + " " +school + " " +timeRange + " " + idNum;
     }
