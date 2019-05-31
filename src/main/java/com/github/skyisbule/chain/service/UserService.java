@@ -10,6 +10,7 @@ import com.github.skyisbule.chain.exception.GlobalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class UserService {
     @Value("${server.url}")
     private String apiUrl;
 
+    @Transactional(rollbackFor = Exception.class)
     public User doRegister(User user) throws GlobalException {
         user.setUid(null);
         user.setBalance(0);
