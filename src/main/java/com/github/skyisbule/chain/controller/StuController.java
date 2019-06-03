@@ -51,4 +51,14 @@ public class StuController {
         }
     }
 
+    @ApiOperation("根据身份证得到一个学生的信息")
+    @RequestMapping("/getById")
+    public BaseHttpResponse<StuInfo> getById(String stuId) throws GlobalException {
+        try{
+            return new BaseHttpResponse<>(service.doCheck(stuId));
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
+    }
+
 }

@@ -44,7 +44,9 @@ public class UserService {
                 userDao.insert(user);
                 return user;
             }catch (Exception e){
-                throw new GlobalException(ErrorConstant.FAIL_REGISTER);
+                user.setAccountHash(Security.getHash());
+                userDao.insert(user);
+                //throw new GlobalException(ErrorConstant.FAIL_REGISTER);
             }
         }
         return null;
@@ -64,7 +66,18 @@ public class UserService {
         User user = userDao.selectByExample(e).get(0);
         user.setPassword(Security.encode(password));
         return user;
+    }
 
+    public int getBalanceBySchool(String school){
+        try{
+            UserExample e = new UserExample();
+            e.createCriteria()
+                    .andUserNameEqualTo(school);
+            return userDao.selectByExample(e).get(0).getBalance();
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }

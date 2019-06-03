@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>学历认证系统</title>
+    <link rel="stylesheet" href='https://t4.chei.com.cn/chsi/css/common2014.css?v=1483494816229'>
+    <link rel="stylesheet" href='https://t1.chei.com.cn/common/ch/iconfont.css?v=1483494816229'>
+    <link rel="stylesheet" href='https://t1.chei.com.cn/chsi/xlcx/lscx/css/min/lscx.min.css?v=1483494816231' />
+    <link rel="stylesheet" href='https://t1.chei.com.cn/common/plugins/dialog/6.0.5/css/ui-dialog.css?v=1483494816229'>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-3.4.0.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="content">
+    <div class="main_lscx clearfix">
+        <div class="m_l" id="leftH">
+            <h2>中国高等教育学历学位证书查询</h2>
+            <div class="m_cnt_m_lscx marginT20 clearfix">
+                <div class='form_box clearfix'>
+                    <div class='lscs_l'>
+                        <form name="queryForm" id="queryForm" action="#" method="POST">
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td class='alignR' style="width: 100px;">证书类别：</td>
+                                    <td class="form-group">
+                                        <div class="zsbh_tips"></div>
+                                        <select id="zslb" name="zslb" onchange="a()" autocomplete="off" required='true' maxlength="18" class='lscx_input' placeholder="证书类别">
+                                            <option value="BYZ">学历证书</option>
+                                        </select>
+                                    </td>
+                                    <div>
+                                    </div>
+                                </tr>
+
+                                <tr>
+                                    <td class='alignR' style="width: 100px;">身份证号：</td>
+                                    <td class="form-group">
+                                        <div class="zsbh_tips"></div>
+                                        <input type="text" class="lscx_input" minlength="18" maxlength="18" id="stuId" name="zsbh" value="" autocomplete="off" required='true'
+                                               placeholder="身份证号" />
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td colspan="4" class='td-btn'>
+                                        <input name="rdmid" id="rdmid" type="hidden" value="m8e1o83px9l8eqxpb7xd8zgxna8bot5q">
+                                        <input name="state" id="state" type="hidden" value="CHSI">
+                                        <input type='button'  id="xueliSubmit" class="btn btn-block btn-primary" value=" 查询 " onClick="return showInfo()" >
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+
+                    <div class="lscs_r" style="width: 288px;">
+                        <strong>注意：</strong>
+                        学历证书由各高校自行印制，学历身份证号通常为18位。不知道身份证号的，可咨询发证学校。
+                    </div>
+
+                </div>
+                <tr>
+                    <td align="center" valign="top">
+                        <div id='info'></div>
+                    </td>
+                </tr>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showInfo(){
+        let id = $("#stuId").val();
+        $.get("/api/stu/getById?stuId="+id,(res)=>{
+            let html = "";
+            let data = res.data;
+            if (data.sid > 0){
+                html += "学生姓名:"+data.stuName+"   毕业院校："+data.school + "      在校时间:"+data.timeRange;
+            }else{
+                html += "无该学生信息"
+            }
+            $("#info").text(html);
+        })
+    }
+</script>
+</body>
+
+
+</html>

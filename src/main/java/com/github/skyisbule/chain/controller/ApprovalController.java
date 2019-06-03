@@ -23,9 +23,9 @@ public class ApprovalController {
 
     @ApiOperation("申请审批")
     @RequestMapping("/commit")
-    public BaseHttpResponse<String> commit(Integer userId,Integer num) throws GlobalException {
+    public BaseHttpResponse<String> commit(String school,Integer num) throws GlobalException {
         try{
-            return new BaseHttpResponse<>(approvalService.commitApproval(userId,num));
+            return new BaseHttpResponse<>(approvalService.commitApproval(school,num));
         }catch (Exception e){
             throw new GlobalException(e.getMessage());
         }
@@ -43,9 +43,9 @@ public class ApprovalController {
 
     @ApiOperation("进行审批")
     @RequestMapping("/register")
-    public BaseHttpResponse<String> doRegister(Integer userId,Integer num) throws GlobalException {
+    public BaseHttpResponse<String> doRegister(Integer aid,Integer isPass) throws GlobalException {
         try{
-            return new BaseHttpResponse<>(approvalService.commitApproval(userId,num));
+            return new BaseHttpResponse<>(approvalService.doApproval(aid,isPass,""));
         }catch (Exception e){
             throw new GlobalException(e.getMessage());
         }

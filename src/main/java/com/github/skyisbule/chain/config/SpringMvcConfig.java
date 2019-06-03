@@ -3,7 +3,10 @@ package com.github.skyisbule.chain.config;
 import com.github.skyisbule.chain.interceptor.Interceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.*;
+
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableWebMvc
@@ -29,6 +32,10 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/")
+                .setCacheControl(CacheControl.maxAge(1, TimeUnit.DAYS));
     }
 
 }

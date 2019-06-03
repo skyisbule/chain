@@ -29,9 +29,19 @@ public class UserController {
 
     @ApiOperation("登录")
     @RequestMapping("/login")
-    public BaseHttpResponse<User> doLogin(String userName,String passowrd) throws GlobalException {
+    public BaseHttpResponse<User> doLogin(String userName,String password) throws GlobalException {
         try{
-            return new BaseHttpResponse<>(userService.doLogin(userName,passowrd));
+            return new BaseHttpResponse<>(userService.doLogin(userName,password));
+        }catch (Exception e){
+            throw new GlobalException(e.getMessage());
+        }
+    }
+
+    @ApiOperation("余额")
+    @RequestMapping("/balance")
+    public BaseHttpResponse<Integer> balance(String school) throws GlobalException {
+        try{
+            return new BaseHttpResponse<>(userService.getBalanceBySchool(school));
         }catch (Exception e){
             throw new GlobalException(e.getMessage());
         }

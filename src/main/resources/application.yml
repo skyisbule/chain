@@ -3,6 +3,12 @@
     org.springframework.web: DEBUG
 
 spring:
+  resources:
+    static-locations: ["/templates/","/static/"]
+  mvc:
+    view:
+      prefix: /templates/
+      suffix: .html
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -10,9 +16,9 @@ spring:
     active: prod
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/db_chain?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://10.9.242.14:10208/test?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
     username: root
-    password: 123456
+    password: admin
   thymeleaf:
     content-type: text/html
     cache: false

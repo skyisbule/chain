@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>学历认证系统</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="css/morris.css">
+    <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="css/AdminLTE.min.css">
+    <link rel="stylesheet" href="css/skin-blue.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <style>
+        .content1,
+        .content2,
+        .content3,
+        .content4,
+        .content5 {
+            width: 30%;
+            height: 100px;
+            float: left;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header class="main-header">
+        <a href="#" class="logo">
+                <span class="logo-mini">
+                    <b>F</b>NC</span>
+            <span class="logo-lg">
+                    <b>学位证书认证系统</b>
+                </span>
+        </a>
+        <nav class="navbar navbar-static-top" role="navigation">
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <ul class="sidebar-menu" data-widget="tree">
+                <!-- Optionally, you can add icons to the links -->
+                <li>
+                    <a href="#">
+                        <i class="fa fa-link"></i>
+                        <span>本校毕业生信息</span>
+                    </a>
+                </li>
+                <li>
+                    <a onclick="goInsert()">
+                        <i class="fa fa-link"></i>
+                        <span>添加学生</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                毕业生
+                <small>全部信息</small>
+            </h1>
+        </section>
+        <div id="sqlInfo" style="width:1000px;height:0; margin:50px 0 0 200px" class="content2">
+            <table id="stuData" width='1000px' border='1px' cellpadding='1px' cellspacing='5px' bordercolor='#FFFFCC' bgcolor='#666666'>
+
+                <tr>
+                    <td  height="25" colspan="6" align="center" bgcolor="#FFFFFF" >
+                        <a href='?page=1'>首页</a>&nbsp;&nbsp;&nbsp;
+                        <a href='#' onclick="skip(-1)">上一页</a>&nbsp;&nbsp;&nbsp;
+                        <a href='#' onclick="skip(1)">下一页</a>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+
+
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery 3 -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- DataTables -->
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="js/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="js/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="js/adminlte.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="js/raphael.min.js"></script>
+    <script src="js/morris.min.js"></script>
+    <script src="js/demo.js"></script>
+</div>
+<script>
+    function goInsert() {
+        window.location.href = "/school_insert.html?&school="+GetUrlParam("school").replace("#","");
+    }
+
+    function GetUrlParam(paraName) {
+        let url = document.location.toString();
+        let arrObj = url.split("?");
+
+        if (arrObj.length > 1) {
+            var arrPara = arrObj[1].split("&");
+            var arr;
+
+            for (var i = 0; i < arrPara.length; i++) {
+                arr = arrPara[i].split("=");
+
+                if (arr != null && arr[0] == paraName) {
+                    return arr[1];
+                }
+            }
+            return "";
+        }
+        else {
+            return "";
+        }
+    }
+
+    function skip(page) {
+        let now  = parseInt(GetUrlParam("page"));
+        let next = now + page;
+        if (next === -1) return;
+        window.location.href = "/school_list.html?page="+next+"&school="+GetUrlParam("school");
+    }
+</script>
+<script>
+    let page = GetUrlParam("page");
+    let school = GetUrlParam("school");
+    $.get("/api/stu/list?size=10&school="+school+"&page="+page,(data)=>{
+        let html  = "<tr>\n" +
+            "                    <td height='40' align='center' bgcolor ='#FFFFFF'>学校</td>\n" +
+            "                    <td height='40' align='center' bgcolor ='#FFFFFF'>姓名</td>\n" +
+            "                    <td height='40' align='center' bgcolor ='#FFFFFF'>身份证号</td>\n" +
+            "                    <td height='40' align='center' bgcolor ='#FFFFFF'>在校时间</td>\n" +
+            "                </tr>";
+        let array = data.data;
+        for (let i = 0; i < array.length; i++) {
+            html += "<tr>";
+            let info = array[i];
+            html += "<td height='30' align='center' bgcolor ='#FFFFFF'>"+info.school+"</td>";
+            html += "<td height='30' align='center' bgcolor ='#FFFFFF'>"+info.stuName+"</td>";
+            html += "<td height='30' align='center' bgcolor ='#FFFFFF'>"+info.idNum+"</td>";
+            html += "<td height='30' align='center' bgcolor ='#FFFFFF'>"+info.timeRange+"</td>";
+            html += "</tr>";
+        }
+        $("#stuData").prepend(html)
+    })
+</script>
+</body>
+
+</html>

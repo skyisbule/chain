@@ -4,6 +4,8 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.crypto.symmetric.SymmetricAlgorithm;
 import cn.hutool.crypto.symmetric.SymmetricCrypto;
 
+import java.util.Random;
+
 public class Security {
 
     //密钥
@@ -28,5 +30,27 @@ public class Security {
         String as = "asdfdsafdsaf";
         System.out.println(encode(as));
         System.out.println(decode(encode(as)));
+    }
+
+    public static String getHash(){
+        String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789000";
+        Random random=new Random();
+        StringBuilder sb=new StringBuilder("0x");
+        for(int i=0;i<40;i++){
+            int number=random.nextInt(62);
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
+    }
+
+    public static String getTransactionHash(){
+        String str="01234560123456abcdefghijklmnopqrstuvwxyz0000000000000000000000000000000000";
+        Random random=new Random();
+        StringBuilder sb=new StringBuilder();
+        for(int i=0;i<40;i++){
+            int number=random.nextInt(72);
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
     }
 }
