@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>注册</title>
+    <script src="js/jquery.min.js"></script>
+</head>
+
+<form>
+    <p><label for="user">学校</label><input id="user" /></p>
+    <p><label for="password">账号</label><input id="password" /></p>
+</form>
+    <button type="button" onclick="doCommit()">提交</button>
+
+<script>
+    function doCommit(){
+        let user = $("#user").val();
+        let password = $("#password").val();
+        $.post("/api/user/register",{
+            userName : user,
+            password : password
+        },(data)=>{
+            alert("success");
+            alert("accountHash:"+data.data.accountHash);
+        })
+    }
+</script>
+</html>

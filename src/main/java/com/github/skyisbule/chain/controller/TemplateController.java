@@ -11,6 +11,11 @@ public class TemplateController {
         return "login";
     }
 
+    @RequestMapping("/register")
+    public String register(){
+        return "register";
+    }
+
     @RequestMapping("/")
     public String index(){
         return "index";

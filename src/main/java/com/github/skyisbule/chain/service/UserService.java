@@ -46,6 +46,7 @@ public class UserService {
             }catch (Exception e){
                 user.setAccountHash(Security.getHash());
                 userDao.insert(user);
+                return user;
                 //throw new GlobalException(ErrorConstant.FAIL_REGISTER);
             }
         }
