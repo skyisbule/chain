@@ -37,7 +37,7 @@ public class StudentService {
         try{
             String exchangeHash = HttpRequest.post(apiUrl+"/add")
                     .form("info",infoStr)
-                    .timeout(20000)//超时，毫秒
+                    .timeout(50000)//超时，毫秒
                     .execute().body();
             info.setExangeHash(exchangeHash);
         }catch (Exception e){
@@ -61,7 +61,7 @@ public class StudentService {
         try{
             String exchangeHash = HttpRequest.post(apiUrl+"/getByHash")
                     .form("hash",hash)
-                    .timeout(20000)//超时，毫秒
+                    .timeout(50000)//超时，毫秒
                     .execute().body();
             String[] infos = exchangeHash.split(" ");
             info.setAll(infos[0],infos[1],infos[2],infos[3]);
@@ -71,7 +71,8 @@ public class StudentService {
         return info;
     }
 
-    public StuInfo doCheck(String stuId){
+    public StuInfo doCheck(String stuId) throws InterruptedException {
+        Thread.sleep((long)5000);
         StuInfoExample e = new StuInfoExample();
         e.createCriteria()
                 .andIdNumEqualTo(stuId);

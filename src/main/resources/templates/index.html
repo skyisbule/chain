@@ -29,8 +29,8 @@
                                     <td class='alignR' style="width: 100px;">证书类别：</td>
                                     <td class="form-group">
                                         <div class="zsbh_tips"></div>
-                                        <select id="zslb" name="zslb" onchange="a()" autocomplete="off" required='true' maxlength="18" class='lscx_input' placeholder="证书类别">
-                                            <option value="BYZ">学历证书</option>
+                                        <select id="zslb" name="zslb" onchange="a()" autocomplete="off" required='true' maxlength="18" class='lscx_input' placeholder="验证类别">
+                                            <option value="BYZ">身份证号</option>
                                         </select>
                                     </td>
                                     <div>
@@ -67,7 +67,7 @@
                 </div>
                 <tr>
                     <td align="center" valign="top">
-                        <div id='info'></div>
+                        <div id='info' style="color:red"></div>
                     </td>
                 </tr>
 
@@ -78,6 +78,7 @@
 <script>
     function showInfo(){
         let id = $("#stuId").val();
+        $("#info").text("查询中");
         $.get("/api/stu/getById?stuId="+id,(res)=>{
             let html = "";
             let data = res.data;

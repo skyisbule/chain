@@ -129,11 +129,13 @@
             let html  = "<tr><td height='40' align='center' bgcolor ='#FFFFFF'>学校</td><td height='40' align='center' bgcolor ='#FFFFFF'>数量</td> <td height='40' align='center' bgcolor ='#FFFFFF'>&nbsp;&nbsp;</td><td height='40' align='center' bgcolor ='#FFFFFF'>&nbsp;&nbsp;</td></tr>";
             let array = data.data;
             for (let i = 0; i < array.length; i++) {
+                html += "<tr>";
                 let info = array[i];
                 html += "<td height='30' align='center' bgcolor ='#FFFFFF'>"+info.userName+"</td>";
                 html += "<td height='30' align='center' bgcolor ='#FFFFFF'>"+info.require+"</td>";
                 html += "<td height='30' align='center' bgcolor ='#FFFFFF'><a onClick=\"pass("+info.aid+")\">通过</a></td>";
                 html += "<td height='30' align='center' bgcolor ='#FFFFFF'><a onClick=\"fail("+info.aid+")\">驳回</a></td>";
+                html += "</tr>";
             }
             $("#Data").prepend(html)
         })
